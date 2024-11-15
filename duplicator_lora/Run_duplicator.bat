@@ -12,26 +12,26 @@ call .\venv\Scripts\activate.bat
 
 :: Loop settings
 :: Change to true if you want to train multiple images. Make sure to properly prepare your dataset. 
-set batch_train=true
+set batch_train=false
 :: The number of images to use for training when batch_train is true. 1 means 2 images(0, 1). 
 set max_num=2
 
 :: Pretrained model path. The path to the base model to use for training. 
-set model_path="F:\SD_Model\Ckpt\NAIO\NAIO_animefull-final-pruned.safetensors"
+set model_path="C:\v1-5-pruned-emaonly.ckpt"
 
 
 :: Root path. Remove numbers from the folder's name if batch_train is true. Example: oirginal_0 -> original. Multiple folders will be processed in numerical order. 
 :: The path you enter must be the parent of the img folder. example : original/img
 :: Path of the original image 
-set root_a_path="G:\desktop\test2\train_1\c\original"
+set root_a_path="C:\train\a"
 :: Path of the edited image 
-set root_b_path="G:\desktop\test2\train_1\g\edited"
+set root_b_path="C:\train\b"
 
 :: The path where the output is stored when batch_train is true.
-set batch_path="G:\desktop\test2\train_1\batch"
+set batch_path="C:\train\batch"
 
 :: sample prompt .txt location
-set sample_prompt="C:\Users\toyxy\sd-scripts/prompt.txt"
+set sample_prompt="C:\train\sample_prompt.txt"
 
 
 ::=========================================================================================::
