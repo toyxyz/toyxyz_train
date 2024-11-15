@@ -9,10 +9,10 @@ setlocal ENABLEDELAYEDEXPANSION
 call .\venv\Scripts\activate.bat
 
 :: Set output Lora path. The path to the merged LORA file.
-set merge_dir="G:\desktop\test2\train\test_4.safetensors"
+set merge_dir="C:\train\merged_lora.safetensors"
 
 :: Set Lora path. Paths of multiple lora trained with batch_train. 
-set dir_path="G:\desktop\test2\train\batch_2"
+set dir_path="C:\train\batch"
 
 
 ::=======================================================================================================::
