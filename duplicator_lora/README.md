@@ -14,6 +14,8 @@ Put these batch files in the sd-scripts folder.
 
 Train the lora using image a, then merge it into the base model, train image b on the merged model, and make the difference between image a and image b lora.
 
+For example, you can create a greenscreen Lora using a normal image A and an image B with a greenscreen background. 
+
 You can train multiple LORAs sequentially with batch_train. 
 
 ![image](https://github.com/user-attachments/assets/f465e755-2a0e-4233-a882-623a0932758f)
