@@ -9,10 +9,10 @@ setlocal enabledelayedexpansion
 set use_tag=false
 
 :: Image dir A. The path where the original, unmodified images are located. 
-set dir_path="G:\desktop\test2\c"
+set dir_path="C:\a"
 
 :: Target path A. The path where the copied images will be saved. 
-set target_path="G:\desktop\test2\train_2\c"
+set target_path="C:\train\a"
 
 :: Target name A. The name of the folder where the image files are stored. A number is automatically added after the name. Example: original -> original_0, original_1
 set target_name="original"
@@ -23,10 +23,10 @@ set class_name="1000"
 
 
 :: Image dir B. he path where the edited images are located. The rest is the same as A. 
-set dir_path_b="G:\desktop\test2\g"
+set dir_path_b="C:\b"
 
 :: Target path B
-set target_path_b="G:\desktop\test2\train_2\g"
+set target_path_b="C:\train\b"
 
 :: Target name B
 set target_name_b="edited"
