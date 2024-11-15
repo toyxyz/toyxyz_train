@@ -1,6 +1,6 @@
 # Duplicator_lora tools
 
-Small batch files to help you learn Duplicator lora.
+Small batch files to help training Duplicator lora.
 
 Use it with kohya-ss/sd-scripts. 
 
