@@ -10,6 +10,8 @@ https://github.com/kohya-ss/sd-scripts
 
 Put these batch files in the sd-scripts folder. 
 
+Each batch file must be modified with the path and parameters of the dataset you prepared before running it. 
+
 ## Run_duplicator.bat
 
 Train the lora using image a, then merge it into the base model, train image b on the merged model, and make the difference between image a and image b lora.
