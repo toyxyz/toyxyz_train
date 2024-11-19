@@ -11,8 +11,10 @@ call .\venv\Scripts\activate.bat
 
 
 :: Loop settings
-:: Change to true if you want to train multiple images. Make sure to properly prepare your dataset. 
+
+:: Change to true if you want to batch train multiple images. Make sure to properly prepare your dataset. 
 set batch_train=false
+
 :: The number of images to use for training when batch_train is true. 1 means 2 images(0, 1). 
 set max_num=2
 
@@ -22,8 +24,10 @@ set model_path="C:\v1-5-pruned-emaonly.ckpt"
 
 :: Root path. Remove numbers from the folder's name if batch_train is true. Example: oirginal_0 -> original. Multiple folders will be processed in numerical order. 
 :: The path you enter must be the parent of the img folder. example : original/img
+
 :: Path of the original image 
 set root_a_path="C:\train\a"
+
 :: Path of the edited image 
 set root_b_path="C:\train\b"
 
@@ -75,6 +79,7 @@ call set merge_dir=%%merge_dir:"=%%
 call :train_network %model_path% %train_dir_a% %out_dir_a% %log_dir_a% %output_name_a%
 
 :: Merge LoRA A to source model
+:: Use merge_model for sd 1.5, or merge_model_xl for sdxl. 
 call :merge_model %model_path% %merge_dir% %lora_dir_a%
 
 :: Train LoRA B
@@ -103,28 +108,27 @@ goto :eof
 ::Edit this section to modify Lora training parameters. : https://github.com/kohya-ss/sd-scripts/blob/main/docs/train_network_README-ja.md
 :train_network
 :: Arguments: %1 = model_path, %2 = train_dir, %3 = out_dir, %4 = log_dir, %5 = output_name
-accelerate launch --num_cpu_threads_per_process=2 "train_network.py" ^
+:: Use "train_network.py" for sd 1.5, or "sdxl_train_network.py" for sdxl. 
+accelerate launch --num_cpu_threads_per_process 2 "train_network.py" ^
 --enable_bucket ^
---min_bucket_reso=256 ^
---max_bucket_reso=2048 ^
+--min_bucket_reso=64 ^
+--max_bucket_reso=1024 ^
 --pretrained_model_name_or_path=%~1 ^
 --train_data_dir=%~2 ^
---resolution="512,512" ^
+--resolution="1024,1024" ^
 --output_dir=%~3 ^
 --logging_dir=%~4 ^
---network_alpha=128 ^
+--network_alpha=16 ^
 --save_model_as=safetensors ^
 --network_module=networks.lora ^
---text_encoder_lr=0.001 ^
---unet_lr=0.001 ^
---network_dim=128 ^
+--network_dim=16 ^
 --output_name=%~5 ^
---lr_scheduler_num_cycles="1" ^
+--lr_scheduler_num_cycles="4" ^
 --no_half_vae ^
 --learning_rate="0.001" ^
---lr_scheduler="cosine" ^
---lr_warmup_steps="200" ^
---train_batch_size="12" ^
+--lr_scheduler="linear" ^
+--bucket_no_upscale ^
+--train_batch_size="8" ^
 --max_train_steps=1000 ^
 --mixed_precision="fp16" ^
 --save_precision="fp16" ^
@@ -132,12 +136,13 @@ accelerate launch --num_cpu_threads_per_process=2 "train_network.py" ^
 --optimizer_type="AdamW8bit" ^
 --max_data_loader_n_workers="12" ^
 --persistent_data_loader_workers ^
---clip_skip=2 ^
 --bucket_reso_steps=64 ^
 --xformers ^
+--gradient_checkpointing ^
 --bucket_no_upscale ^
---noise_offset=0.0 ^
 --network_train_unet_only ^
+--seed=42 ^
+--console_log_simple ^
 --sample_sampler=euler_a ^
 --sample_prompts=%sample_prompt% ^
 --sample_every_n_steps=100
@@ -149,4 +154,9 @@ goto :eof
 :merge_model
 :: Arguments: %1 = model_path, %2 = merge_dir, %3 = lora_dir
 "networks/merge_lora.py" --sd_model %~1 --save_precision fp16 --precision float --save_to %~2 --models %~3 --ratios 1
+goto :eof
+
+:merge_model_xl
+:: Arguments: %1 = model_path, %2 = merge_dir, %3 = lora_dir
+"networks/sdxl_merge_lora.py" --sd_model %~1 --save_precision fp16 --precision float --save_to %~2 --models %~3 --ratios 1
 goto :eof
