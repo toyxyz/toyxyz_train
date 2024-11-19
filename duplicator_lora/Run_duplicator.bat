@@ -115,7 +115,7 @@ accelerate launch --num_cpu_threads_per_process 2 "train_network.py" ^
 --max_bucket_reso=1024 ^
 --pretrained_model_name_or_path=%~1 ^
 --train_data_dir=%~2 ^
---resolution="1024,1024" ^
+--resolution="512,512" ^
 --output_dir=%~3 ^
 --logging_dir=%~4 ^
 --network_alpha=16 ^
