@@ -10,6 +10,9 @@ https://github.com/kohya-ss/sd-scripts
 
 Put these batch files in the sd-scripts folder. 
 
+![image](https://github.com/user-attachments/assets/23a559f1-3bbe-4d08-84c8-dec4686f393f)
+
+
 Each batch file must be modified with the path and parameters of the dataset you prepared before running it. 
 
 ## Run_duplicator.bat
